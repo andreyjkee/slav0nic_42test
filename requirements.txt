@@ -1,0 +1,2 @@
+tddspry
+django==1.3

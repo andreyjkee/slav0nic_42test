@@ -1,0 +1,7 @@
+*.wpr
+*.pyc
+*.pyo
+*.~
+*.orig
+*.db
+.env/
