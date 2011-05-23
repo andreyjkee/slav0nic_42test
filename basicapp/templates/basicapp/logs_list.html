@@ -1,0 +1,30 @@
+{% extends 'basicapp/base.html' %}
+
+{% block title %} Latest reqests {% endblock %}
+{% block body %}
+<table summary="Latest request logs" border="0" cellspacing="0" cellpadding="0">
+  <caption><em>Latest request logs</em></caption>
+  <thead>
+    <tr>
+      <th class="span-4">date</th>
+      <th class="span-2">Method</th>
+      <th class="span-4">Path</th>
+      <th class="span-2">Remote address</th>
+      <th class="span-6">User agent</th>
+      <th class="span-4 last">Referer</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for l in logs %}
+    <tr>
+      <td>{{ l.date }}</td>
+      <td>{{ l.method }}</td>
+      <td>{{ l.path }}</td>
+      <td>{{ l.remote_addr }}</td>
+      <td>{{ l.user_agent }}</td>
+      <td>{{ l.referer }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
