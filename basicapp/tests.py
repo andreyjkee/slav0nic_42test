@@ -4,7 +4,7 @@ from tddspry.django import DatabaseTestCase, HttpTestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
-from basicapp.models import UserProfile
+from basicapp.models import UserProfile, RequestLog
 
 
 TEST_DATA = {
@@ -55,7 +55,6 @@ class TestRequestLog(HttpTestCase):
       ticket:3 testcase for RequestLog model/manager and middleware
     '''
     def test_reqs(self):
-        self.go200('/')
-        r = Request.objects.latest('pk')
+        self.go('/')
+        r = RequestLog.objects.latest('pk')
         self.assertEqual(r.path, '/')
-        self.assertEqual(r.http_code, 200)
