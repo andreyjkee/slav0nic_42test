@@ -1,0 +1,20 @@
+{% extends "basicapp/base.html" %}
+{% block body %}
+  <h1>42 Coffee Cups Test Assignment</h1>
+  <hr>
+  <div class="span-12 first">
+    <p>{{ profile.user.first_name }}</p>
+    <p>{{ profile.user.last_name }}</p>
+    <p>{{ profile.birthday }}</p>
+    <p><strong>Bio</strong>:</p>
+    <p>{{ profile.bio|safe }}</p>
+  </div>
+  <div class="span-12 last">
+    <p>Contacts</p>
+    <p><strong>Email</strong>: {{ profile.user.email }}</p>
+    <p><strong>Jabber</strong>: {{profile.jabber }}</p>
+    <p><strong>Skype</strong>: {{ profile.skype }}</p>
+    <p><strong>Other contacts</strong>:</p>
+    {{ profile.other_contacts|linebreaks }}
+  </div>
+{% endblock %}

@@ -2,6 +2,7 @@
 from datetime import datetime
 from tddspry.django import DatabaseTestCase, HttpTestCase
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 from basicapp.models import UserProfile
 
@@ -35,6 +36,15 @@ class TestT1View(HttpTestCase):
     '''
       ticket:1 view testcase
     '''
+    def setup(self):
+        user = self.helper('create_user', active=False)
+        uprofile = self.helper('create_profile',
+                               user,
+                               UserProfile,
+                               bio=TEST_DATA['bio'],
+                               birthday=TEST_DATA['birthday']
+                               )
+
     def test_index(self):
-        self.go200('basicapp:index')
+        self.go200('/')
         self.find('Bio')

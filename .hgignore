@@ -1,5 +1,4 @@
 syntax: glob
-
 .git
 *.wpr
 *.pyc
@@ -7,5 +6,6 @@ syntax: glob
 *.~
 *.orig
 *.db
+*.sqlite3
 local_settings.py
-.env/
+re:^static/

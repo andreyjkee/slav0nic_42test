@@ -1,0 +1,5 @@
+make test
+pip install -r requirements.txt
+./manage.py syncdb --noinput
+./manage.py collectstatic
+./manage.py runserver
