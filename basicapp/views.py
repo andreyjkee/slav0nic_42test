@@ -4,6 +4,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 
+from basicapp.models import RequestLog
+
 
 def index(request):
     '''
@@ -17,3 +19,12 @@ def index(request):
     except ObjectDoesNotExist:
         raise Http404
     return render(request, 'basicapp/profile_detail.html', {'profile': uprofile})
+
+
+def logs(request):
+    '''
+      Show first 10 http requests 
+    '''
+    logs = RequestLog.objects.all()[:10]
+    return render(request, 'basicapp/logs_list.html', {'logs': logs})
+

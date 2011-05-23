@@ -17,4 +17,7 @@
     <p><strong>Other contacts</strong>:</p>
     {{ profile.other_contacts|linebreaks }}
   </div>
+  <div class="span-24 last">
+    <a href="{% url basicapp:logs %}">Request logs</a>
+  </div>
 {% endblock %}
