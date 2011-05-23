@@ -48,3 +48,14 @@ class TestT1View(HttpTestCase):
     def test_index(self):
         self.go200('/')
         self.find('Bio')
+
+
+class TestRequestLog(HttpTestCase):
+    '''
+      ticket:3 testcase for RequestLog model/manager and middleware
+    '''
+    def test_reqs(self):
+        self.go200('/')
+        r = Request.objects.latest('pk')
+        self.assertEqual(r.path, '/')
+        self.assertEqual(r.http_code, 200)

@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 from django.utils.translation import ugettext_lazy as _
 
+from .managers import RequestLogManager
+
 
 class UserProfile(models.Model):
     '''
@@ -24,3 +26,9 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return self.user.username
+
+
+class RequestLog(models.Model):
+    pass
+
+    objects = RequestLogManager()
