@@ -1,16 +1,40 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
+#coding: utf-8
+from datetime import datetime
+from tddspry.django import DatabaseTestCase, HttpTestCase
+from django.contrib.auth.models import User
 
-Replace this with more appropriate tests for your application.
-"""
-
-from django.test import TestCase
+from basicapp.models import UserProfile
 
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+TEST_DATA = {
+    'birthday': datetime(1985, 1, 12).date(),
+    'bio': u'lazy clerk from <b>UA</b>',
+    'other_contacts': u'root@python.su',
+}
+
+
+class TestT1DB(DatabaseTestCase):
+    '''
+      ticket:1 database testcase
+    '''
+
+    def test_profile(self):
+        user = self.helper('create_user', active=False)
+        uprofile = self.helper('create_profile',
+                               user,
+                               UserProfile,
+                               bio=TEST_DATA['bio'],
+                               birthday=TEST_DATA['birthday']
+                               )
+        p = user.get_profile()
+        self.assert_equal(p.bio, TEST_DATA['bio'])
+        self.assert_equal(p.user.pk, user.pk)
+
+
+class TestT1View(HttpTestCase):
+    '''
+      ticket:1 view testcase
+    '''
+    def test_index(self):
+        self.go200('basicapp:index')
+        self.find('Bio')

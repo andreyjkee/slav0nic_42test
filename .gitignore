@@ -4,4 +4,5 @@
 *.~
 *.orig
 *.db
+local_settings.py
 .env/

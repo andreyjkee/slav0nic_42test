@@ -1,7 +1,7 @@
 # Django settings for testproj project.
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+DEBUG = False
+TEMPLATE_DEBUG = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -141,6 +141,9 @@ LOGGING = {
         },
     }
 }
+
+AUTH_PROFILE_MODULE = 'basicapp.UserProfile'
+LOGIN_REDIRECT_URL = '/'
 
 try:
     from local_settings import *
