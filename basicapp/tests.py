@@ -76,4 +76,3 @@ class TestContextProcessor(TestCase):
         c = RequestContext(request, {'foo': 'bar'}, [settings_processor])
         self.assertTrue('settings' in c)
         self.assertEquals(c['settings'], django_settings)
-

@@ -1,5 +1,6 @@
 {% extends 'basicapp/base.html' %}
 
+{% block extra_head %}{{ form.media }}{% endblock %}
 {% block title %}Edit form{% endblock %}
 {% block body %}
     <h2>Edit form</h2>
