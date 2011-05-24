@@ -2,6 +2,14 @@
 {% block body %}
   <h1>42 Coffee Cups Test Assignment</h1>
   <hr>
+  <div id="login" class="span-4 prepend-20 last">
+      {% if request.user.is_authenticated %}
+        <p>Hello, <em>{{ user }}</em></p>
+        <p><a href="{{ profile.edit_url }}">Edit</a></p>
+      {% else %}
+        <a href="{% url django.contrib.auth.views.login %}?next={{ request.path_info }}">Login</a>
+      {% endif %}
+  </div>
   <div class="span-12 first">
     <p>{{ profile.user.first_name }}</p>
     <p>{{ profile.user.last_name }}</p>

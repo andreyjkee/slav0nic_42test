@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 
 from basicapp.managers import RequestLogManager
 
@@ -26,6 +27,10 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return self.user.username
+
+    @property
+    def edit_url(self):
+        return reverse('basicapp:edit_form', kwargs={'profile_id': self.pk})
 
 
 class RequestLog(models.Model):

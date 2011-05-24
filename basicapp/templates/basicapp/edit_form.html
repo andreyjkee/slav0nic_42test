@@ -1,0 +1,22 @@
+{% extends 'basicapp/base.html' %}
+
+{% block title %}Edit form{% endblock %}
+{% block body %}
+    <h2>Edit form</h2>
+    <hr>
+    <div class="span-24 last">
+        {% if form.errors %}
+            <div class="error">Error :(</div>
+        {% endif %}
+        <form method="post" action="{{ profile.edit_url }}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="span-12 {% cycle 'first' 'last' %}"><legend>{{ field.label }}</legend> {{ field }}{{ field.errors }}</div>
+            {% endfor %}
+            <div class="span-12 last">
+                <input type="submit" value="Save" />
+                <a href="{% url basicapp:index %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
