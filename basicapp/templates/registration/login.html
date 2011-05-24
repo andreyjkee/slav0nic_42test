@@ -1,0 +1,18 @@
+{% extends 'basicapp/base.html' %}
+
+{% block title %}Login form{% endblock %}
+{% block body %}
+    <h2>Login form</h2>
+    <hr>
+    <div class="span-10 prepend-7 append-7 last">
+        {% if form.errors %}
+            <p class="error">Your username and password didn't match. Please try again.</p>
+        {% endif %}
+        <form method="post" action="{% url django.contrib.auth.views.login %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="login" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+    </div>
+{% endblock %}
