@@ -1,7 +1,7 @@
 # Django settings for testproj project.
 
 DEBUG = False
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -119,7 +119,18 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'basicapp',
 )
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.messages.context_processors.messages',
 
+    'django.core.context_processors.request',
+    'basicapp.context_processors.settings_processor',
+    
+)
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.

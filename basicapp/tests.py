@@ -1,10 +1,11 @@
 #coding: utf-8
 from datetime import datetime
-from tddspry.django import DatabaseTestCase, HttpTestCase
+from tddspry.django import DatabaseTestCase, HttpTestCase, TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from basicapp.models import UserProfile, RequestLog
+from basicapp.context_processors import settings_processor
 
 
 TEST_DATA = {
@@ -58,3 +59,21 @@ class TestRequestLog(HttpTestCase):
         self.go('/')
         r = RequestLog.objects.latest('pk')
         self.assertEqual(r.path, '/')
+
+
+class TestContextProcessor(TestCase):
+    '''
+      ticket:4 test context processor for settings
+    '''
+
+    def test_settings(self):
+        from django.template import RequestContext
+        from django.test.client import RequestFactory #goodbye @#$% tddspry :)
+        from django.conf import settings as django_settings
+
+        factory = RequestFactory()
+        request = factory.get('/')
+        c = RequestContext(request, {'foo': 'bar'}, [settings_processor])
+        self.assertTrue('settings' in c)
+        self.assertEquals(c['settings'], django_settings)
+
