@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 
 from basicapp.models import UserProfile, RequestLog
 from basicapp.context_processors import settings_processor
-
+from basicapp.templatetags.basicapp_extras import admin_change_url
 
 TEST_DATA = {
     'birthday': datetime(1985, 1, 12).date(),
@@ -100,3 +100,16 @@ class TestEditForm(TestCase):
         self.go(form_edit_url)
         self.url(form_edit_url)
         self.find('slav0nic@jabber.ru')
+
+
+class TestTag(TestCase):
+    '''
+      ticket:8 test edit tag
+    '''
+
+    fixtures = ['initial_data.json']
+
+    def test_tag(self):
+        user = User.objects.get(pk=1)
+        url = admin_change_url(user)
+        self.assertEqual(url, '<a href="/admin/auth/user/1/">(admin)</a>')
