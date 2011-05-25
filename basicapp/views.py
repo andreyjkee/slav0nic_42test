@@ -6,7 +6,6 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import simplejson as json
-from django.utils.safestring import mark_safe
 from basicapp.models import RequestLog, UserProfile
 from basicapp.forms import EditProfileForm as EditProfileFormOrigin
 
