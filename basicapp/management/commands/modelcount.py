@@ -13,6 +13,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for m in get_models():
-            self.stdout.write("%s.%s:\t%i\n" % (m._meta.app_label,
+            data = "%s.%s:\t%i\n" % (m._meta.app_label,
                                                 m._meta.module_name.capitalize(),
-                                                m.objects.count()))
+                                                m.objects.count())
+            self.stdout.write(data)
+            self.stderr.write("error: " + data)
