@@ -129,4 +129,4 @@ class TestCommand(TestCase):
         out = StringIO()
         management.call_command('modelcount', stdout=out)
         res = out.getvalue()
-        self.find_in(res, 'User:\t1')
+        self.find_in('User:\t1', res)
