@@ -141,9 +141,11 @@ class TestSignals(TestCase):
     fixtures = ['initial_data.json']
 
     def test_modelchanges(self):
-        user = User.objects.get(pk=1)
-        user.last_name = '1'
-        user.save()
+        self.login('admin', 'admin')
+        self.go('/')
         l = LogEntry.objects.latest('pk')
-        self.assertTrue(l.is_change())
+        r = RequestLog.objects.latest('pk')
+        self.assertEqual(r.pk, int(l.object_id))
+        self.assertTrue(l.is_addition())
         self.assertFalse(l.is_deletion())
+        self.assertFalse(l.is_change())

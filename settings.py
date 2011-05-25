@@ -99,6 +99,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'basicapp.middleware.RequestLogMiddleware',
+    'basicapp.middleware.ThreadLocalMiddleware',
 )
 
 ROOT_URLCONF = 'urls'

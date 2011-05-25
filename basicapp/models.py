@@ -4,6 +4,11 @@ from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.contrib.admin.models import LogEntry, ADDITION, CHANGE, DELETION
+from django.contrib.contenttypes.models import ContentType
+from django.utils.encoding import force_unicode
 
 from basicapp.managers import RequestLogManager
 
@@ -52,3 +57,37 @@ class RequestLog(models.Model):
 
     def __unicode__(self):
         return u" ".join((str(self.date), self.method, self.path))
+
+
+from basicapp.middleware import get_current_request
+
+
+def log_changes(sender, obj, flag):
+    """
+      ticket:10 Log changes to DB
+    """
+    request = get_current_request()
+    if sender is LogEntry or request is None: 
+        return
+    # LogEntry model required user field =*(
+    if request.user.is_authenticated():
+        l = LogEntry.objects.log_action(
+            user_id=request.user.pk,
+            content_type_id=ContentType.objects.get_for_model(sender).pk,
+            object_id=obj.pk,
+            object_repr=force_unicode(obj),
+            action_flag=flag)
+
+@receiver(post_save)
+def post_save_handler(sender, **kwargs):
+    obj = kwargs['instance']
+    flag = ADDITION if kwargs['created'] else CHANGE
+    log_changes(sender, obj, flag)
+
+
+@receiver(post_delete)
+def post_delete_handler(sender, **kwargs):
+    obj = kwargs['instance']
+    print obj, 'deleted'
+    log_changes(sender, obj, DELETION)
+
