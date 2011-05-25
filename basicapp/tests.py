@@ -1,8 +1,11 @@
 #coding: utf-8
 from datetime import datetime
+from StringIO import StringIO
+
 from tddspry.django import DatabaseTestCase, HttpTestCase, TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.core import management
 
 from basicapp.models import UserProfile, RequestLog
 from basicapp.context_processors import settings_processor
@@ -113,3 +116,17 @@ class TestTag(TestCase):
         user = User.objects.get(pk=1)
         url = admin_change_url(user)
         self.assertEqual(url, '<a href="/admin/auth/user/1/">(admin)</a>')
+
+
+class TestCommand(TestCase):
+    '''
+      ticket:9 test `modelscount` command
+    '''
+
+    fixtures = ['initial_data.json']
+
+    def test_modelcount(self):
+        out = StringIO()
+        management.call_command('modelcount', stdout=out)
+        res = out.getvalue()
+        self.find_in('User:\t1', res)
