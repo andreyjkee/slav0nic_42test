@@ -100,5 +100,3 @@ class TestEditForm(TestCase):
         self.go(form_edit_url)
         self.url(form_edit_url)
         self.find('slav0nic@jabber.ru')
-
-

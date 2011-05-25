@@ -8,6 +8,6 @@ class JSDataPickerWidget(DateInput):
 
     class Media:
         css = {'all': ('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/smoothness/jquery-ui.css',)}
-        js = ('http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js', 
+        js = ('http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js',
               'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js',
               'basicapp/js/datepicker.js')

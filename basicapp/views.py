@@ -26,7 +26,7 @@ def index(request):
 
 def logs(request):
     '''
-      Show first 10 http requests 
+      Show first 10 http requests
     '''
     logs = RequestLog.objects.all()[:10]
     return render(request, 'basicapp/logs_list.html', {'logs': logs})
@@ -44,7 +44,7 @@ def edit_form(request, profile_id):
             form.save()
             return HttpResponse(json.dumps({'success': True}), content_type='application/json')
         else:
-            errors =  ["%s: %s" % (k,  ', '.join(map(unicode, v))) for (k,v) in form.errors.iteritems()]
+            errors = ["%s: %s" % (k, ', '.join(map(unicode, v))) for (k, v) in form.errors.iteritems()]
             errors_text = "; ".join(errors)
             return HttpResponse(json.dumps({'success': False, 'errors': errors_text}),
                                 content_type='application/json')
