@@ -1,6 +1,13 @@
 {% extends 'basicapp/base.html' %}
 
-{% block extra_head %}{{ form.media }}{% endblock %}
+{% block extra_head %}
+{{ form.media }}
+
+<style type="text/css">
+/* fix jqueryui artefact */
+#ui-datepicker-div { display: none; }
+</style>
+{% endblock %}
 {% block title %}Edit form{% endblock %}
 {% block body %}
     <h2>Edit form</h2>
