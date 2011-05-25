@@ -1,18 +1,25 @@
 {% extends 'basicapp/base.html' %}
 
-{% block extra_head %}{{ form.media }}{% endblock %}
+{% block extra_head %}
+{{ form.media }}
+<script type="text/javascript" src="{{ STATIC_URL }}basicapp/js/jquery.form.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}basicapp/js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}basicapp/js/basic.js"></script>
+<style type="text/css">
+/* fix jqueryui artefact */
+#ui-datepicker-div { display: none; }
+</style>
+{% endblock %}
 {% block title %}Edit form{% endblock %}
 {% block body %}
     <h2>Edit form</h2>
     <hr>
     <div class="span-24 last">
-        {% if form.errors %}
-            <div class="error">Error :(</div>
-        {% endif %}
-        <form method="post" action="{{ profile.edit_url }}">
+        <div id="ajax_info" class="span-24 last"></div>
+        <form id="basicform" method="post" action="{{ profile.edit_url }}">
             {% csrf_token %}
             {% for field in form %}
-                <div class="span-12 {% cycle 'first' 'last' %}"><legend>{{ field.label }}</legend> {{ field }}{{ field.errors }}</div>
+                <div class="span-12 {% cycle 'first' 'last' %}"><legend>{{ field.label }}</legend> {{ field }}</div>
             {% endfor %}
             <div class="span-12 last">
                 <input type="submit" value="Save" />

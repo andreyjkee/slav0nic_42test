@@ -76,3 +76,27 @@ class TestContextProcessor(TestCase):
         c = RequestContext(request, {'foo': 'bar'}, [settings_processor])
         self.assertTrue('settings' in c)
         self.assertEquals(c['settings'], django_settings)
+
+
+class TestEditForm(TestCase):
+    '''
+      ticket:5 ticket:6 edit form tests
+    '''
+
+    fixtures = ['initial_data.json']
+
+    def test_access(self):
+        form_edit_url = self.build_url('basicapp:edit_form', args=[1])
+        # unauthorized access
+
+        # wtf, why code==200? O_o
+        #self.disable_redirect()
+        #self.go(form_edit_url)
+        #self.code(301)
+        self.go(form_edit_url)
+        self.url('/accounts/login/\?next=%s' % form_edit_url)
+
+        self.login('admin', 'admin')
+        self.go(form_edit_url)
+        self.url(form_edit_url)
+        self.find('slav0nic@jabber.ru')
