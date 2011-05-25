@@ -1,11 +1,12 @@
 {% extends "basicapp/base.html" %}
+{% load basicapp_extras %}
+
 {% block body %}
   <h1>42 Coffee Cups Test Assignment</h1>
   <hr>
   <div id="login" class="span-4 prepend-20 last">
       {% if request.user.is_authenticated %}
-        <p>Hello, <em>{{ user }}</em></p>
-        <p><a href="{{ profile.edit_url }}">Edit</a></p>
+        <p><a href="{{ profile.edit_url }}">Edit</a> {% admin_change_url request.user %}</p>
       {% else %}
         <a href="{% url django.contrib.auth.views.login %}?next={{ request.path_info }}">Login</a>
       {% endif %}
