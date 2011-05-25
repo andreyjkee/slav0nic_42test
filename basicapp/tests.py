@@ -6,6 +6,7 @@ from tddspry.django import DatabaseTestCase, HttpTestCase, TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.core import management
+from django.contrib.admin.models import LogEntry
 
 from basicapp.models import UserProfile, RequestLog
 from basicapp.context_processors import settings_processor
@@ -130,3 +131,19 @@ class TestCommand(TestCase):
         management.call_command('modelcount', stdout=out)
         res = out.getvalue()
         self.find_in('User:\t1', res)
+
+
+class TestSignals(TestCase):
+    '''
+      ticket:10 test signals
+    '''
+
+    fixtures = ['initial_data.json']
+
+    def test_modelchanges(self):
+        user = User.objects.get(pk=1)
+        user.last_name = '1'
+        user.save()
+        l = LogEntry.objects.latest('pk')
+        self.assertTrue(l.is_change())
+        self.assertFalse(l.is_deletion())
