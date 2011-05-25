@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils import simplejson as json
 from django.utils.safestring import mark_safe
 from basicapp.models import RequestLog, UserProfile
-from basicapp.forms import EditProfileForm
+from basicapp.forms import EditProfileForm as EditProfileFormOrigin
 
 def index(request):
     '''
@@ -36,7 +36,18 @@ def logs(request):
 def edit_form(request, profile_id):
     '''
       ticket:5 Edit form view
+      ticket:7
     '''
+
+    class EditProfileForm(EditProfileFormOrigin):
+        '''
+          ticket:7 New form with changed keyOrder
+        '''
+
+        def __init__(self, *args, **kwargs):
+            super(EditProfileForm, self).__init__(*args, **kwargs)
+            self.fields.keyOrder.reverse()
+
     uprofile = get_object_or_404(UserProfile, pk=profile_id)
     if request.method == 'POST' and request.is_ajax():
         form = EditProfileForm(request.POST, instance=uprofile)
