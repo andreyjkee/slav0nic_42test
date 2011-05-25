@@ -2,6 +2,7 @@
 from django.db import models
 from django.http import HttpRequest
 
+
 # maybe will be more correct do this via @classmethod
 class RequestLogManager(models.Manager):
     def save_from_request(self, request, commit=True):

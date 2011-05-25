@@ -9,6 +9,7 @@ from django.utils import simplejson as json
 from basicapp.models import RequestLog, UserProfile
 from basicapp.forms import EditProfileForm as EditProfileFormOrigin
 
+
 def index(request):
     '''
       Main page view.
