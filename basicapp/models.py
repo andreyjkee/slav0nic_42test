@@ -13,6 +13,9 @@ from django.utils.encoding import force_unicode
 from basicapp.managers import RequestLogManager
 
 
+PRIORITY_CHOICES = ((0, '0'), (1, '1'))
+
+
 class UserProfile(models.Model):
     '''
       Basic user profile model
@@ -47,6 +50,7 @@ class RequestLog(models.Model):
     referer = models.CharField(_('Refferer'), max_length=2083, blank=True, default='')
     user_agent = models.CharField(_('User agent'), max_length=255, blank=True, default='')
     date = models.DateTimeField(_('Date'), auto_now_add=True)
+    priority = models.SmallIntegerField(_('Priority'), choices=PRIORITY_CHOICES, db_index=True, blank=True, default=0)
 
     objects = RequestLogManager()
 
@@ -58,6 +62,12 @@ class RequestLog(models.Model):
     def __unicode__(self):
         return u" ".join((str(self.date), self.method, self.path))
 
+    def invert_priority(self):
+        '''
+          invert priority : 0 -> 1; 1-> 0
+        '''
+        self.priority ^= 1  # blackjack :)
+
 
 from basicapp.middleware import get_current_request
 
@@ -67,7 +77,7 @@ def log_changes(sender, obj, flag):
       ticket:10 Log changes to DB
     """
     request = get_current_request()
-    if sender is LogEntry or request is None: 
+    if sender is LogEntry or request is None:
         return
     # LogEntry model required user field =*(
     if request.user.is_authenticated():
@@ -77,6 +87,7 @@ def log_changes(sender, obj, flag):
             object_id=obj.pk,
             object_repr=force_unicode(obj),
             action_flag=flag)
+
 
 @receiver(post_save)
 def post_save_handler(sender, **kwargs):
@@ -88,6 +99,4 @@ def post_save_handler(sender, **kwargs):
 @receiver(post_delete)
 def post_delete_handler(sender, **kwargs):
     obj = kwargs['instance']
-    print obj, 'deleted'
     log_changes(sender, obj, DELETION)
-

@@ -6,7 +6,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import simplejson as json
-from basicapp.models import RequestLog, UserProfile
+from basicapp.models import RequestLog, UserProfile, PRIORITY_CHOICES
 from basicapp.forms import EditProfileForm as EditProfileFormOrigin
 
 
@@ -28,8 +28,15 @@ def logs(request):
     '''
       Show first 10 http requests
     '''
-    logs = RequestLog.objects.all()[:10]
-    return render(request, 'basicapp/logs_list.html', {'logs': logs})
+    try:
+        c = int(request.GET.get('c', 0))
+    except (ValueError, TypeError):
+        c = 0
+    #if c not in [i[0] for i PRIORITY_CHOICES]:
+    #    c = 0
+    p = '-priority' if c == 1 else 'priority'
+    logs = RequestLog.objects.all().order_by(p, '-date')[:10]
+    return render(request, 'basicapp/logs_list.html', {'logs': logs, 'c': c ^ 1})
 
 
 @login_required
@@ -62,3 +69,10 @@ def edit_form(request, profile_id):
     else:
         form = EditProfileForm(instance=uprofile)
     return render(request, 'basicapp/edit_form.html', {'form': form, 'profile': uprofile})
+
+
+def change_priority(request, lid):
+    l = get_object_or_404(RequestLog, pk=lid)
+    l.invert_priority()
+    l.save()
+    return redirect('basicapp:logs')
