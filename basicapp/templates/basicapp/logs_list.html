@@ -10,8 +10,9 @@
       <th class="span-2">Method</th>
       <th class="span-4">Path</th>
       <th class="span-2">Remote address</th>
-      <th class="span-6">User agent</th>
-      <th class="span-4 last">Referer</th>
+      <th class="span-5">User agent</th>
+      <th class="span-4">Referer</th>
+      <th class="span-1 last"><a href="{% url basicapp:logs %}?c={{ c }}">Priority</a></th>
     </tr>
   </thead>
   <tbody>
@@ -23,6 +24,7 @@
       <td>{{ l.remote_addr }}</td>
       <td>{{ l.user_agent }}</td>
       <td>{{ l.referer }}</td>
+      <td>{{ l.priority }} <a href="{% url basicapp:change_priority lid=l.pk %}" title="change priority" style="text-decoration: none;">↕</a></td>
     </tr>
   {% endfor %}
   </tbody>
