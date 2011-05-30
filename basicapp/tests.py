@@ -1,7 +1,7 @@
 #coding: utf-8
 from datetime import datetime
 from tddspry.django import DatabaseTestCase, HttpTestCase, TestCase
-
+from django.contrib.auth.models import User
 from basicapp.models import UserProfile, RequestLog
 from basicapp.context_processors import settings_processor
 from basicapp.templatetags.basicapp_extras import admin_change_url
