@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import simplejson as json
-from basicapp.models import RequestLog, UserProfile, PRIORITY_CHOICES
+from django.shortcuts import redirect
+from basicapp.models import RequestLog, UserProfile
 from basicapp.forms import EditProfileForm as EditProfileFormOrigin
 
 
