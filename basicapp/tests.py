@@ -4,7 +4,6 @@ from StringIO import StringIO
 
 from tddspry.django import DatabaseTestCase, HttpTestCase, TestCase
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.core import management
 
 from basicapp.models import UserProfile, RequestLog
