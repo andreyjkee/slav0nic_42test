@@ -12,3 +12,4 @@ class RequestLogAdmin(admin.ModelAdmin):
 
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(RequestLog, RequestLogAdmin)
+
