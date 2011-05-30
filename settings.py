@@ -130,8 +130,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     'django.core.context_processors.request',
     'basicapp.context_processors.settings_processor',
-    
 )
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.
