@@ -2,6 +2,7 @@
 
 from django.forms.widgets import DateInput
 
+
 class JSDataPickerWidget(DateInput):
     def __init__(self, attrs={'class': 'datepicker'}, format=None):
         super(JSDataPickerWidget, self).__init__(attrs)
