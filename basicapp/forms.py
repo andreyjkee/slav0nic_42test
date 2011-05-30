@@ -1,6 +1,5 @@
 #coding: utf-8
 
-from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django import forms
 from django.forms.util import ErrorList
@@ -17,7 +16,8 @@ class DivErrorList(ErrorList):
         return self.as_divs()
 
     def as_divs(self):
-        if not self: return u''
+        if not self:
+            return u''
         return mark_safe(u'<div class="errorlist">%s</div>' % ''.join([u'<div class="error">%s</div>' % e for e in self]))
 
 
@@ -46,11 +46,10 @@ class EditProfileForm(forms.ModelForm):
         self.error_class = DivErrorList
 
     def save(self, commit=True):
-        uprofile  = super(EditProfileForm, self).save(commit)
+        uprofile = super(EditProfileForm, self).save(commit)
 
         uprofile.user.last_name = self.cleaned_data['last_name']
         uprofile.user.first_name = self.cleaned_data['first_name']
         uprofile.user.email = self.cleaned_data['email']
         uprofile.user.save(force_update=True)
         return uprofile
-

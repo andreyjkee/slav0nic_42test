@@ -9,6 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from basicapp.models import RequestLog, UserProfile
 from basicapp.forms import EditProfileForm
 
+
 def index(request):
     '''
       Main page view.
