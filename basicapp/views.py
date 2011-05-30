@@ -3,10 +3,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
-from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import simplejson as json
-from django.utils.safestring import mark_safe
 from basicapp.models import RequestLog, UserProfile
 from basicapp.forms import EditProfileForm
 
