@@ -81,7 +81,7 @@ def log_changes(sender, obj, flag):
         return
     # LogEntry model required user field =*(
     if request.user.is_authenticated():
-        l = LogEntry.objects.log_action(
+        LogEntry.objects.log_action(
             user_id=request.user.pk,
             content_type_id=ContentType.objects.get_for_model(sender).pk,
             object_id=obj.pk,

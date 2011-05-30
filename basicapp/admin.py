@@ -11,5 +11,6 @@ class UserProfileAdmin(admin.ModelAdmin):
 class RequestLogAdmin(admin.ModelAdmin):
     list_display = ['date', 'method', 'path', 'remote_addr']
 
+
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(RequestLog, RequestLogAdmin)
