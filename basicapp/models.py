@@ -67,16 +67,17 @@ def log_changes(sender, obj, flag):
       ticket:10 Log changes to DB
     """
     request = get_current_request()
-    if sender is LogEntry or request is None: 
+    if sender is LogEntry or request is None:
         return
     # LogEntry model required user field =*(
     if request.user.is_authenticated():
-        l = LogEntry.objects.log_action(
+        LogEntry.objects.log_action(
             user_id=request.user.pk,
             content_type_id=ContentType.objects.get_for_model(sender).pk,
             object_id=obj.pk,
             object_repr=force_unicode(obj),
             action_flag=flag)
+
 
 @receiver(post_save)
 def post_save_handler(sender, **kwargs):
@@ -90,4 +91,3 @@ def post_delete_handler(sender, **kwargs):
     obj = kwargs['instance']
     print obj, 'deleted'
     log_changes(sender, obj, DELETION)
-
