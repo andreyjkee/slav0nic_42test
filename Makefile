@@ -6,3 +6,6 @@ test:
 
 pep8:
 	pep8 --statistics --show-pep8 --filename=*.py ./
+
+pyflakes:
+	pyflakes .

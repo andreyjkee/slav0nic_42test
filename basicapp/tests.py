@@ -1,8 +1,6 @@
 #coding: utf-8
 from datetime import datetime
 from tddspry.django import DatabaseTestCase, HttpTestCase
-from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 
 from basicapp.models import UserProfile
 
