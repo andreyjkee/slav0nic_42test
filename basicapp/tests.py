@@ -19,12 +19,12 @@ class TestT1DB(DatabaseTestCase):
 
     def test_profile(self):
         user = self.helper('create_user', active=False)
-        uprofile = self.helper('create_profile',
-                               user,
-                               UserProfile,
-                               bio=TEST_DATA['bio'],
-                               birthday=TEST_DATA['birthday']
-                               )
+        self.helper('create_profile',
+                        user,
+                        UserProfile,
+                        bio=TEST_DATA['bio'],
+                        birthday=TEST_DATA['birthday']
+                    )
         p = user.get_profile()
         self.assert_equal(p.bio, TEST_DATA['bio'])
         self.assert_equal(p.user.pk, user.pk)
@@ -36,12 +36,12 @@ class TestT1View(HttpTestCase):
     '''
     def setup(self):
         user = self.helper('create_user', active=False)
-        uprofile = self.helper('create_profile',
-                               user,
-                               UserProfile,
-                               bio=TEST_DATA['bio'],
-                               birthday=TEST_DATA['birthday']
-                               )
+        self.helper('create_profile',
+                        user,
+                        UserProfile,
+                        bio=TEST_DATA['bio'],
+                        birthday=TEST_DATA['birthday']
+                    )
 
     def test_index(self):
         self.go200('/')
