@@ -1,6 +1,5 @@
 #coding: utf-8
 
-from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django import forms
 from django.forms.util import ErrorList

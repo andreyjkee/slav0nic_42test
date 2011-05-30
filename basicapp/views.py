@@ -10,6 +10,7 @@ from django.utils.safestring import mark_safe
 from basicapp.models import RequestLog, UserProfile
 from basicapp.forms import EditProfileForm
 
+
 def index(request):
     '''
       Main page view.
