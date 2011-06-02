@@ -18,6 +18,11 @@
     {{ profile.other_contacts|linebreaks }}
   </div>
   <div class="span-24 last">
-    <a href="{% url basicapp:logs %}">Request logs</a>
+    <p><a href="{% url basicapp:logs %}">Request logs</a></p>
+    Settings:
+    <p class="quiet"> 
+      settings.DEBUG: {{ settings.DEBUG }} <br/>
+      settings.TEMPLATE_DEBUG: {{ settings.TEMPLATE_DEBUG }}
+    </p>
   </div>
 {% endblock %}
