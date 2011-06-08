@@ -6,6 +6,7 @@ from django.http import Http404, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import simplejson as json
 from django.shortcuts import redirect
+from django.core.urlresolvers import reverse
 from basicapp.models import RequestLog, UserProfile
 from basicapp.forms import EditProfileForm as EditProfileFormOrigin
 
@@ -36,7 +37,7 @@ def logs(request):
     #    c = 0
     p = '-priority' if c == 1 else 'priority'
     logs = RequestLog.objects.all().order_by(p, '-date')[:10]
-    return render(request, 'basicapp/logs_list.html', {'logs': logs, 'c': c ^ 1})
+    return render(request, 'basicapp/logs_list.html', {'logs': logs, 'c': c ^ 1, 'cc': c})
 
 
 @login_required
@@ -75,4 +76,8 @@ def change_priority(request, lid):
     l = get_object_or_404(RequestLog, pk=lid)
     l.invert_priority()
     l.save()
+    if 'c' in request.GET:
+        c = request.GET['c']
+        redirect_url = reverse('basicapp:logs') + '?c=%s' % c
+        return redirect(redirect_url)
     return redirect('basicapp:logs')

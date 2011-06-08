@@ -24,7 +24,7 @@
       <td>{{ l.remote_addr }}</td>
       <td>{{ l.user_agent }}</td>
       <td>{{ l.referer }}</td>
-      <td>{{ l.priority }} <a href="{% url basicapp:change_priority lid=l.pk %}" title="change priority" style="text-decoration: none;">↕</a></td>
+      <td>{{ l.priority }} <a href="{% url basicapp:change_priority lid=l.pk %}?c={{ cc }}" title="change priority" style="text-decoration: none;">↕</a></td>
     </tr>
   {% endfor %}
   </tbody>
