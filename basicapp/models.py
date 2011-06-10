@@ -13,9 +13,6 @@ from django.utils.encoding import force_unicode
 from basicapp.managers import RequestLogManager
 
 
-PRIORITY_CHOICES = ((0, '0'), (1, '1'))
-
-
 class UserProfile(models.Model):
     '''
       Basic user profile model
@@ -50,7 +47,7 @@ class RequestLog(models.Model):
     referer = models.CharField(_('Refferer'), max_length=2083, blank=True, default='')
     user_agent = models.CharField(_('User agent'), max_length=255, blank=True, default='')
     date = models.DateTimeField(_('Date'), auto_now_add=True)
-    priority = models.SmallIntegerField(_('Priority'), choices=PRIORITY_CHOICES, db_index=True, blank=True, default=0)
+    priority = models.PositiveIntegerField(_('Priority'), db_index=True, blank=True, default=0)
 
     objects = RequestLogManager()
 
@@ -61,12 +58,6 @@ class RequestLog(models.Model):
 
     def __unicode__(self):
         return u" ".join((str(self.date), self.method, self.path))
-
-    def invert_priority(self):
-        '''
-          invert priority : 0 -> 1; 1-> 0
-        '''
-        self.priority ^= 1  # blackjack :)
 
 
 from basicapp.middleware import get_current_request

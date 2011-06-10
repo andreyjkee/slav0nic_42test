@@ -16,17 +16,22 @@
     </tr>
   </thead>
   <tbody>
+  <form method="post" action="">{% csrf_token %}
+  <tr><th class="span-22 last"><input type="submit" value="Save changes" /></td></tr>
+  {{ formset.management_form }}
   {% for l in logs %}
     <tr>
-      <td>{{ l.date }}</td>
-      <td>{{ l.method }}</td>
-      <td>{{ l.path }}</td>
-      <td>{{ l.remote_addr }}</td>
-      <td>{{ l.user_agent }}</td>
-      <td>{{ l.referer }}</td>
-      <td>{{ l.priority }} <a href="{% url basicapp:change_priority lid=l.pk %}?c={{ cc }}" title="change priority" style="text-decoration: none;">↕</a></td>
+        <td>{{ l.date }}</td>
+        <td>{{ l.method }}</td>
+        <td>{{ l.path }}</td>
+        <td>{{ l.remote_addr }}</td>
+        <td>{{ l.user_agent }}</td>
+        <td>{{ l.referer }}</td>
+        <td>{{ l.edit_form.priority }}{{ l.edit_form.id }} {{ l.edit_form.priority.errors }}</td>
     </tr>
   {% endfor %}
+  <tr><th class="span-22 last"><input type="submit" value="Save changes" /></td></tr>
+  </form>
   </tbody>
 </table>
 {% endblock %}

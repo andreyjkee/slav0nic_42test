@@ -7,6 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils import simplejson as json
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.forms.models import modelformset_factory
 from basicapp.models import RequestLog, UserProfile
 from basicapp.forms import EditProfileForm as EditProfileFormOrigin
 
@@ -33,11 +34,30 @@ def logs(request):
         c = int(request.GET.get('c', 0))
     except (ValueError, TypeError):
         c = 0
-    #if c not in [i[0] for i PRIORITY_CHOICES]:
-    #    c = 0
     p = '-priority' if c == 1 else 'priority'
     logs = RequestLog.objects.all().order_by(p, '-date')[:10]
-    return render(request, 'basicapp/logs_list.html', {'logs': logs, 'c': c ^ 1, 'cc': c})
+
+    LogFormSet = modelformset_factory(RequestLog, fields=('priority', ), max_num=10)
+    if request.method == 'POST':
+        formset = LogFormSet(request.POST, queryset=logs)
+        if formset.is_valid():
+            formset.save()
+            if 'c' in request.GET:
+                c = request.GET['c']
+                redirect_url = reverse('basicapp:logs') + '?c=%s' % c
+                return redirect(redirect_url)
+            else:
+                return redirect('basicapp:logs')
+    else:
+        formset = LogFormSet(queryset=logs)
+        # merge logs queryset with forms
+    for i, form in enumerate(formset):
+        logs[i].edit_form = form
+
+    return render(request, 'basicapp/logs_list.html', {'logs': logs,
+                                                       'formset': formset,
+                                                       'c': c ^ 1,
+                                                       'cc': c})
 
 
 @login_required
@@ -70,14 +90,3 @@ def edit_form(request, profile_id):
     else:
         form = EditProfileForm(instance=uprofile)
     return render(request, 'basicapp/edit_form.html', {'form': form, 'profile': uprofile})
-
-
-def change_priority(request, lid):
-    l = get_object_or_404(RequestLog, pk=lid)
-    l.invert_priority()
-    l.save()
-    if 'c' in request.GET:
-        c = request.GET['c']
-        redirect_url = reverse('basicapp:logs') + '?c=%s' % c
-        return redirect(redirect_url)
-    return redirect('basicapp:logs')
