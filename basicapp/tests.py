@@ -63,18 +63,6 @@ class TestRequestLog(HttpTestCase):
         r = RequestLog.objects.latest('pk')
         self.assertEqual(r.path, '/')
 
-    def test_req_priority(self):
-        '''
-          Test for priority field
-        '''
-        self.go('/')
-        r = RequestLog.objects.latest('pk')
-        self.assertEqual(r.priority, 0)
-        r.invert_priority()
-        self.assertEqual(r.priority, 1)
-        r.invert_priority()
-        self.assertEqual(r.priority, 0)
-
 
 class TestContextProcessor(TestCase):
     '''
